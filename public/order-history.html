@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order History - LocalConnect</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: url('images/flower-back.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 4rem auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .order {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .order p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📦 Your Order History</h1>
+    <div id="order-list">Loading orders...</div>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("Please log in first.");
+      window.location.href = "login.html";
+    }
+
+    fetch("http://localhost:5000/api/orders/history", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("order-list");
+        container.innerHTML = "";
+
+        if (!data.length) {
+          container.innerHTML = "<p>You have no orders yet.</p>";
+        } else {
+          data.forEach(order => {
+            const div = document.createElement("div");
+            div.className = "order";
+            div.innerHTML = `
+              <p><strong>Order ID:</strong> ${order.id}</p>
+              <p><strong>Items:</strong> ${order.items.join(', ')}</p>
+              <p><strong>Status:</strong> ${order.status}</p>
+              <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
+            `;
+            container.appendChild(div);
+          });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById("order-list").innerHTML = "<p>Failed to load orders.</p>";
+      });
+  </script>
+</body>
+</html>

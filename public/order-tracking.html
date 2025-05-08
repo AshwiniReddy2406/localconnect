@@ -1,0 +1,20 @@
+
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Track Your Order</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="overlay">
+    <h1>📦 Track Your Order</h1>
+    <p id="order-status">Loading order status...</p>
+    <button onclick="document.getElementById('order-status').innerText = '✅ Out for delivery!'">Update Status</button>
+    <div class="action-buttons" style="margin-top: 20px;">
+      <a href="order-history.html">Back to Order History</a>
+    </div>
+  </div>
+</body>
+</html>

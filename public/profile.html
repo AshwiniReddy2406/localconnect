@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile - LocalConnect</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: url('images/flower-back.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 4rem auto;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-box {
+      background: #f9f9f9;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .info-box p {
+      margin: 10px 0;
+    }
+
+    .logout-btn {
+      margin-top: 1.5rem;
+      display: block;
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #dc3545;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>👤 Your Profile</h1>
+    <div class="info-box">
+      <p><strong>Email:</strong> <span id="user-email">Loading...</span></p>
+      <p><strong>User ID:</strong> <span id="user-id">Loading...</span></p>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("⚠️ Please log in first.");
+      window.location.href = '/login.html';
+    }
+
+    axios.get('http://localhost:5000/api/user/me', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => {
+      document.getElementById('user-email').textContent = res.data.email;
+      document.getElementById('user-id').textContent = res.data.id;
+    })
+    .catch(err => {
+      console.error(err);
+      alert('❌ Failed to load user data.');
+      window.location.href = '/login.html';
+    });
+
+    function logout() {
+      localStorage.removeItem('token');
+      alert('👋 Logged out.');
+      window.location.href = '/login.html';
+    }
+  </script>
+</body>
+</html>
