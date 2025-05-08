@@ -1,19 +1,35 @@
-document.getElementById('payment-form').addEventListener('submit', function (e) {
+// public/payment.js
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Please log in to make a payment.");
+    window.location.href = "/login.html";
+    return;
+  }
+
+  const paymentForm = document.getElementById("paymentForm");
+  const statusText = document.getElementById("paymentStatus");
+
+  paymentForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-  
-    axios.post('http://localhost:5000/api/orders', {}, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(() => {
-      document.getElementById("paymentStatus").textContent = "✅ Payment successful!";
-      setTimeout(() => {
-        window.location.href = "confirmation.html";
-      }, 1500);
-    })
-    .catch(err => {
+    statusText.textContent = "⏳ Processing payment...";
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/orders", {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (res.status === 201) {
+        statusText.textContent = "✅ Payment successful! Redirecting...";
+        setTimeout(() => {
+          window.location.href = "confirmation.html";
+        }, 2000);
+      } else {
+        statusText.textContent = "❌ Payment failed.";
+      }
+    } catch (err) {
       console.error(err);
-      document.getElementById("paymentStatus").textContent = "❌ Payment failed";
-    });
+      statusText.textContent = "❌ Error processing payment.";
+    }
   });
-  
+});

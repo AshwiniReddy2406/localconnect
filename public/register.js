@@ -1,41 +1,34 @@
-document.getElementById('register-form').addEventListener('submit', async (e) => {
+document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.getElementById("register-form");
+  const message = document.getElementById("register-message");
+
+  registerForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
-  
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-  
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
     try {
-      const res = await fetch('http://localhost:5000/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-  
-      const data = await res.json();
-  
-      if (res.ok) {
-        // ✅ Auto-login after registration
-        const loginRes = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-  
-        const loginData = await loginRes.json();
-  
-        if (loginRes.ok) {
-          localStorage.setItem('token', loginData.token);
-          alert("✅ Registration successful and logged in!");
-          window.location.href = '/products.html';
-        } else {
-          alert(`❌ Registered but login failed: ${loginData.message}`);
-        }
-      } else {
-        alert(`❌ ${data.message}`);
-      }
+      // Step 1: Register user
+      await axios.post("http://localhost:5000/api/auth/register", { email, password });
+
+      // Step 2: Log in immediately after registration
+      const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+
+      // ✅ Step 3: Save token
+      localStorage.setItem("token", res.data.token);
+
+      message.textContent = "✅ Registered and logged in!";
+      message.style.color = "green";
+
+      // Step 4: Redirect to homepage
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1000);
     } catch (err) {
-      console.error('Error during registration/login:', err);
-      alert('❌ Something went wrong.');
+      console.error(err);
+      message.textContent = err.response?.data?.message || "❌ Registration failed.";
+      message.style.color = "red";
     }
   });
-  
+});

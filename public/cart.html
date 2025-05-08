@@ -2,137 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Cart - LocalConnect</title>
+  <title>Cart - LocalConnect</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('images/flower-back.jpeg') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      padding-top: 60px;
-    }
-
-    .cart-container {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      width: 90%;
-      max-width: 600px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      background: #f1f1f1;
-      margin-bottom: 10px;
-      padding: 1rem;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .btn-group {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    button {
-      padding: 0.7rem 1.2rem;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    .clear-btn {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    .checkout-btn {
-      background-color: #28a745;
-      color: white;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="cart-container">
+  <div class="container">
     <h1>🛒 Your Cart</h1>
-    <ul id="cart-items"><li>Loading...</li></ul>
+    <ul id="cartItems"></ul>
     <div class="btn-group">
-      <button class="clear-btn" id="clear-cart-btn">Clear Cart</button>
-      <button class="checkout-btn" onclick="window.location.href='payment.html'">Proceed to Payment</button>
+      <button id="clearCartBtn">Clear Cart</button>
+      <button id="checkoutBtn">Checkout</button>
     </div>
   </div>
-
-  <script>
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert("⚠️ Please log in first.");
-      window.location.href = "/login.html";
-    }
-
-    // Load cart items
-    axios.get('http://localhost:5000/api/cart', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(res => {
-      const items = res.data.items;
-      const cartList = document.getElementById('cart-items');
-      cartList.innerHTML = '';
-
-      if (!items.length) {
-        cartList.innerHTML = '<li>Your cart is empty.</li>';
-      } else {
-        items.forEach(item => {
-          const li = document.createElement('li');
-          li.textContent = item;
-          cartList.appendChild(li);
-        });
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      document.getElementById('cart-items').innerHTML = '<li>❌ Failed to load cart.</li>';
-    });
-
-    // Clear cart
-    document.getElementById('clear-cart-btn').addEventListener('click', () => {
-      if (!confirm('Clear all items from cart?')) return;
-
-      axios.delete('http://localhost:5000/api/cart/clear', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(() => {
-        alert('🗑️ Cart cleared!');
-        window.location.reload();
-      })
-      .catch(err => {
-        console.error(err);
-        alert('❌ Could not clear cart.');
-      });
-    });
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>

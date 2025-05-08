@@ -1,93 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Register - LocalConnect</title>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 40px;
-      max-width: 400px;
-      margin: auto;
-      background: url('images/flower-back.jpeg') no-repeat center center fixed;
-      background-size: cover;
-    }
-
-    .form-container {
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    input {
-      display: block;
-      width: 100%;
-      margin-bottom: 15px;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      padding: 10px;
-      width: 100%;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #218838;
-    }
-
-    #register-status {
-      margin-top: 10px;
-      font-size: 14px;
-      color: crimson;
-      text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="form-container">
+  <div class="login-container">
     <h2>📝 Register</h2>
-    <form id="register-form">
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Password" required />
+    <form onsubmit="handleRegister(event)">
+      <input type="email" id="regEmail" placeholder="Email" required />
+      <input type="password" id="regPassword" placeholder="Password" required />
       <button type="submit">Register</button>
     </form>
-    <p id="register-status"></p>
+    <p id="registerMessage"></p>
   </div>
 
   <script>
-    document.getElementById('register-form').addEventListener('submit', async (e) => {
+    function handleRegister(e) {
       e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const statusBox = document.getElementById('register-status');
-
-      try {
-        // Step 1: Register
-        const regRes = await axios.post('http://localhost:5000/api/auth/register', { email, password });
-
-        // Step 2: Auto-login
-        const loginRes = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-
-        // Step 3: Save token and redirect
-        localStorage.setItem('token', loginRes.data.token);
-        alert('✅ Registered and logged in!');
-        window.location.href = 'index.html';
-      } catch (err) {
-        console.error(err);
-        statusBox.textContent = err.response?.data?.message || '❌ Registration failed.';
-      }
-    });
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      // For simulation
+      localStorage.setItem('registeredEmail', email);
+      localStorage.setItem('registeredPassword', password);
+      document.getElementById('registerMessage').textContent = "✅ Registered! Please log in.";
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 1500);
+    }
   </script>
 </body>
 </html>

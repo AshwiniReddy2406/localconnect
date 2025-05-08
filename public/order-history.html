@@ -1,103 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Order History - LocalConnect</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <style>
-    body {
-      background: url('images/flower-back.jpeg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 2rem;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: auto;
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .order {
-      border-bottom: 1px solid #ccc;
-      padding: 1rem 0;
-    }
-
-    .order p {
-      margin: 4px 0;
-    }
-
-    .track-btn {
-      margin-top: 0.5rem;
-      background-color: #007bff;
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .track-btn:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <h1>📦 Your Order History</h1>
-    <div id="order-list">Loading...</div>
+    <ul id="orderList"></ul>
   </div>
-
-  <script>
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert("⚠️ Please log in to view your orders.");
-      window.location.href = "/login.html";
-    }
-
-    axios.get("http://localhost:5000/api/orders/history", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .then(res => {
-      const orders = res.data;
-      const container = document.getElementById("order-list");
-      container.innerHTML = '';
-
-      if (!orders.length) {
-        container.innerHTML = "<p>No orders yet.</p>";
-        return;
-      }
-
-      orders.forEach(order => {
-        const div = document.createElement('div');
-        div.className = 'order';
-        div.innerHTML = `
-          <p><strong>Order #${order.id}</strong></p>
-          <p>Items: ${order.items.join(', ')}</p>
-          <p>Status: ${order.status}</p>
-          <p>Date: ${new Date(order.createdAt).toLocaleString()}</p>
-          <button class="track-btn" onclick="trackOrder(${order.id})">Track Order</button>
-        `;
-        container.appendChild(div);
-      });
-    })
-    .catch(err => {
-      console.error(err);
-      document.getElementById("order-list").innerHTML = "<p>❌ Failed to load orders.</p>";
-    });
-
-    function trackOrder(orderId) {
-      window.location.href = `order-tracking.html?orderId=${orderId}`;
-    }
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>

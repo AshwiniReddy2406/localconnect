@@ -1,88 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Track Order - LocalConnect</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <style>
-    body {
-      background: url('images/flower-back.jpeg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      max-width: 500px;
-      width: 90%;
-    }
-
-    h1 {
-      margin-bottom: 1rem;
-    }
-
-    .status {
-      font-size: 1.2rem;
-      color: #333;
-      margin: 1rem 0;
-    }
-
-    .back-btn {
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 6px;
-      background-color: #007bff;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .back-btn:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <h1>📍 Order Tracking</h1>
-    <p class="status" id="status">Loading...</p>
-    <button class="back-btn" onclick="window.location.href='order-history.html'">← Back to Orders</button>
+    <div id="orderDetails"></div>
+    <button id="updateStatusBtn">Mark as Shipped</button>
   </div>
-
-  <script>
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert("Please log in first.");
-      window.location.href = "/login.html";
-    }
-
-    const query = new URLSearchParams(window.location.search);
-    const orderId = query.get("orderId");
-
-    if (!orderId) {
-      document.getElementById("status").textContent = "❌ No order ID provided.";
-    } else {
-      axios.get(`http://localhost:5000/api/orders/${orderId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(res => {
-        const order = res.data;
-        document.getElementById("status").textContent = `Status for Order #${order.id}: ${order.status}`;
-      })
-      .catch(err => {
-        console.error(err);
-        document.getElementById("status").textContent = "❌ Failed to fetch order details.";
-      });
-    }
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>

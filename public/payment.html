@@ -4,107 +4,20 @@
   <meta charset="UTF-8">
   <title>Payment - LocalConnect</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background: url('images/flower-back.jpeg') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .container {
-      background-color: rgba(255, 255, 255, 0.95);
-      padding: 2rem 2.5rem;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-    }
-
-    h1 {
-      margin-bottom: 1.5rem;
-      font-size: 24px;
-      color: #333;
-    }
-
-    input {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      width: 100%;
-      padding: 0.8rem;
-      background-color: #28a745;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #218838;
-    }
-
-    #paymentStatus {
-      margin-top: 1rem;
-      font-size: 15px;
-      color: #2b8a3e;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>💳 Payment Details</h1>
-    <form id="payment-form">
-      <input type="text" placeholder="Cardholder Name" required />
-      <input type="text" placeholder="Card Number" required />
-      <input type="month" placeholder="Expiry" required />
-      <input type="text" placeholder="CVV" required />
+  <div class="payment-form">
+    <h2>💳 Enter Payment Details</h2>
+    <form id="paymentForm">
+      <input type="text" placeholder="Cardholder Name" required>
+      <input type="text" placeholder="Card Number" required>
+      <input type="month" required>
+      <input type="text" placeholder="CVV" required>
       <button type="submit">Pay Now</button>
     </form>
-    <div id="paymentStatus"></div>
+    <p id="paymentStatus"></p>
   </div>
-
-  <script>
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert("⚠️ Please log in first.");
-      window.location.href = "/login.html";
-    }
-
-    document.getElementById('payment-form').addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      try {
-        const res = await axios.post('http://localhost:5000/api/orders', {}, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-
-        if (res.status === 201) {
-          document.getElementById('paymentStatus').textContent = "✅ Payment successful!";
-          setTimeout(() => {
-            window.location.href = "confirmation.html";
-          }, 1500);
-        } else {
-          document.getElementById('paymentStatus').textContent = "❌ Payment failed.";
-        }
-      } catch (err) {
-        console.error(err);
-        document.getElementById('paymentStatus').textContent = "❌ Error processing payment.";
-      }
-    });
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>
