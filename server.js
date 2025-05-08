@@ -1,10 +1,12 @@
-const express = require('express');
+console.log("🚀 Server script started");const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const db = require('./models');
 const bcrypt = require('bcryptjs'); // for default user
 
 const app = express();
+const PORT = process.env.PORT || 5050;
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -13,19 +15,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 db.sequelize.sync({ force: false }).then(async () => {
   console.log("✅ DB Synced");
 
-  // Create default user
-  const hashedPassword = await bcrypt.hash('password123', 10);
-  await db.User.create({
-    email: 'user@example.com',
-    password: hashedPassword
-  });
+  // Create default user if not exists
+  const existing = await db.User.findOne({ where: { email: 'user@example.com' } });
+  if (!existing) {
+    const hashedPassword = await bcrypt.hash('password123', 10);
+    await db.User.create({
+      email: 'user@example.com',
+      password: hashedPassword
+    });
+    console.log("✅ Default user created");
+  }
 
-  // Seed products
-  await db.Product.bulkCreate([
-    { name: "Milk", price: 2.5, image: "milk.jpg" },
-    { name: "Bread", price: 1.8, image: "bread.jpg" },
-    { name: "Eggs", price: 3.0, image: "eggs.jpg" }
-  ]);
+  // Seed sample products if none exist
+  const productCount = await db.Product.count();
+  if (productCount === 0) {
+    await db.Product.bulkCreate([
+      { name: "Milk", price: 2.5, image: "milk.jpg" },
+      { name: "Bread", price: 1.8, image: "bread.jpg" },
+      { name: "Eggs", price: 3.0, image: "eggs.jpg" }
+    ]);
+    console.log("✅ Products seeded");
+  }
 });
 
 // ✅ API Routes
@@ -35,15 +45,12 @@ app.use("/api/cart", require("./routes/cart"));
 app.use("/api/orders", require("./routes/orders"));
 app.use("/api/products", require("./routes/products"));
 
-// ✅ Optional fallback
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "index.html"));
-// });
+// ✅ Catch-all: Serve frontend for unknown routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-const PORT = 5000;
+// ✅ Start server
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
-});
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
 });

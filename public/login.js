@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value.trim();
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post("http://localhost:5050/api/auth/login", {
         email,
         password
       });
@@ -20,12 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
       loginMessage.textContent = "✅ Login successful! Redirecting...";
       loginMessage.style.color = "green";
 
-      // Redirect to homepage
+      // Redirect after short delay
       setTimeout(() => {
         window.location.href = "index.html";
-      }, 1000);
+      }, 1200);
     } catch (err) {
-      console.error(err);
+      console.error("Login error:", err);
       loginMessage.textContent =
         err.response?.data?.message || "❌ Login failed.";
       loginMessage.style.color = "red";

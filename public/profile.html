@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Profile - LocalConnect</title>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>LocalConnect - Profile</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="profile-section">
-    <h2>👤 Your Profile</h2>
-    <div class="profile-field">
-      <label>Email:</label>
-      <input id="emailField" type="email" readonly>
-      <button onclick="enableEdit('emailField')">Edit</button>
+  <div class="top-bar">
+    <span><strong>LocalConnect - Profile</strong></span>
+    <div>
+      <a class="home-button" href="index.html">🏠 Home</a>
+      <a class="cart-button" href="order-history.html">📦 Your orders</a>
     </div>
-    <div class="profile-field">
-      <label>Phone:</label>
-      <input id="phoneField" type="text" readonly>
-      <button onclick="enableEdit('phoneField')">Edit</button>
-    </div>
-    <div class="profile-field">
-      <label>Address:</label>
-      <input id="addressField" type="text" readonly>
-      <button onclick="enableEdit('addressField')">Edit</button>
-    </div>
-    <button onclick="saveProfile()">Save Profile</button>
   </div>
-  <script src="script.js" defer></script>
+
+  <main class="main-content">
+    <div class="profile-section">
+      <h2>Your Profile Settings</h2>
+
+      <div class="profile-field">
+        <label>Email:</label>
+        <input id="emailField" readonly />
+        <button onclick="enableEdit('emailField')">Edit</button>
+      </div>
+
+      <div class="profile-field">
+        <label>Phone Number:</label>
+        <input id="phoneField" readonly />
+        <button onclick="enableEdit('phoneField')">Edit</button>
+      </div>
+
+      <div class="profile-field">
+        <label>Address:</label>
+        <input id="addressField" readonly />
+        <button onclick="enableEdit('addressField')">Edit</button>
+      </div>
+
+      <button onclick="saveProfile()">💾 Save Changes</button>
+    </div>
+  </main>
+
+  <script src="profile.js" defer></script>
 </body>
 </html>

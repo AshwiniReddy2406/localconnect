@@ -1,35 +1,34 @@
-// public/payment.js
 document.addEventListener("DOMContentLoaded", () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("Please log in to make a payment.");
-    window.location.href = "/login.html";
-    return;
-  }
-
   const paymentForm = document.getElementById("paymentForm");
   const statusText = document.getElementById("paymentStatus");
 
-  paymentForm?.addEventListener("submit", async (e) => {
+  paymentForm?.addEventListener("submit", (e) => {
     e.preventDefault();
-    statusText.textContent = "⏳ Processing payment...";
 
-    try {
-      const res = await axios.post("http://localhost:5000/api/orders", {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+    statusText.textContent = "Processing payment...";
+    statusText.style.color = "#000";
 
-      if (res.status === 201) {
-        statusText.textContent = "✅ Payment successful! Redirecting...";
-        setTimeout(() => {
-          window.location.href = "confirmation.html";
-        }, 2000);
-      } else {
-        statusText.textContent = "❌ Payment failed.";
-      }
-    } catch (err) {
-      console.error(err);
-      statusText.textContent = "❌ Error processing payment.";
-    }
+    setTimeout(() => {
+      statusText.textContent = "✅ Payment successful! Thank you for your purchase.";
+      statusText.style.color = "green";
+
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const pastOrders = JSON.parse(localStorage.getItem("pastOrders")) || [];
+      const timestamp = new Date().toLocaleString();
+
+      const newOrder = {
+        items: cart,
+        date: timestamp,
+        status: "Confirmed"
+      };
+
+      pastOrders.push(newOrder);
+      localStorage.setItem("pastOrders", JSON.stringify(pastOrders));
+      localStorage.removeItem("cart");
+
+      setTimeout(() => {
+        window.location.href = "confirmation.html";
+      }, 2500);
+    }, 1500);
   });
 });

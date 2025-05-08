@@ -1,16 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Order History - LocalConnect</title>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>📦 Your Order History</h1>
-    <ul id="orderList"></ul>
+  <div class="top-bar">
+    <span><strong>📦 Your Order History</strong></span>
+    <div>
+      <a class="home-button" href="index.html">🏠 Home</a>
+      <a class="profile-button" href="profile.html">👤 Profile</a>
+    </div>
   </div>
-  <script src="script.js" defer></script>
+
+  <main class="main-content">
+    <ul id="orderList"></ul>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const orderList = document.getElementById("orderList");
+      const orders = JSON.parse(localStorage.getItem("pastOrders")) || [];
+
+      if (orders.length === 0) {
+        orderList.innerHTML = "<li>No past orders found.</li>";
+      } else {
+        orders.forEach((order, index) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>Order ${index + 1}</strong> - <em>${order.date}</em>
+            <ul>${order.items.map(item => `<li>${item}</li>`).join("")}</ul>
+          `;
+          orderList.appendChild(li);
+        });
+      }
+    });
+  </script>
 </body>
 </html>

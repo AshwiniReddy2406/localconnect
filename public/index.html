@@ -1,36 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>LocalConnect - Home</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <header>
-    <div class="header">
-      <div class="logo">LocalConnect</div>
-      <div class="location">Detecting location...</div>
-      <div class="button-group">
-        <button onclick="location.href='cart.html'">View Cart</button>
-        <button onclick="location.href='order-history.html'">Your Orders</button>
-        <button onclick="location.href='profile.html'">Profile</button>
-        <button onclick="location.href='login.html'">Login</button>
-      </div>
+  <header class="top-bar">
+    <div class="logo">LocalConnect</div>
+    <div id="location" class="location">Detecting location...</div>
+    <div class="action-buttons">
+      <a href="index.html" class="home-button">🏠 Home</a>
+      <a href="cart.html" class="cart-button">🛒 Cart</a>
+      <a href="profile.html" class="profile-button">👤 Profile</a>
+      <a href="login.html" class="logout-button">Logout</a>
     </div>
   </header>
 
-  <main>
-    <div class="shops">
+  <main class="main-content">
+    <div class="welcome-banner">
+      <img src="images/online-shopping.jpg" alt="Shopping Banner" />
       <h2>Welcome to LocalConnect</h2>
       <p>Connecting local businesses with nearby customers.</p>
-      <div class="shops-grid" id="product-list">
-        <!-- Products will be inserted here dynamically by script.js -->
-      </div>
     </div>
-  </main>
 
-  <script src="script.js" defer></script>
+    <div class="search-section">
+      <input type="text" id="searchInput" placeholder="Search for items..." />
+    </div>
+
+    <div class="shops-grid" id="shops">Loading products...</div>
+  </main>
 </body>
 </html>

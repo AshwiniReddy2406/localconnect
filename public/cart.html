@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Cart - LocalConnect</title>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>🛒 Your Cart</h1>
-    <ul id="cartItems"></ul>
-    <div class="btn-group">
-      <button id="clearCartBtn">Clear Cart</button>
-      <button id="checkoutBtn">Checkout</button>
+  <div class="top-bar">
+    <div class="logo">🛒 Your Shopping Cart</div>
+    <div class="action-buttons">
+      <a href="index.html" class="home-button">🏠 Home</a>
+      <a href="profile.html" class="profile-button">👤 Profile</a>
     </div>
   </div>
-  <script src="script.js" defer></script>
+
+  <div class="cart-container">
+    <ul id="cartItems"></ul>
+    <div class="cart-actions">
+      <button id="checkoutBtn">✅ Proceed to Payment</button>
+      <button id="clearCartBtn">🗑️ Clear Cart</button>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="cart.js"></script>
 </body>
 </html>

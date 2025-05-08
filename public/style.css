@@ -1,253 +1,87 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  height: 100vh;
-  background: #f0f4f8;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url("images/flower-back.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  color: #333;
 }
 
-.login-container {
-  background: rgb(215, 229, 255);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-input {
-  display: ruby-base-container;
-  width: 100%;
-  padding: 0.75rem;
-  margin: 1rem 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
+/* Header */
 .top-bar {
   background-color: #358e64;
-  color: rgb(0, 0, 0);
+  color: white;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.main-content {
-  padding: 2rem;
+.logo {
+  font-weight: bold;
+  font-size: 20px;
 }
 
+.action-buttons a {
+  margin-left: 10px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.home-button { background-color: #007bff; }
+.cart-button { background-color: #ff9800; }
+.profile-button { background-color: #4CAF50; }
+.logout-button { background-color: #f44336; }
+
+/* Search bar */
+.search-section {
+  text-align: center;
+  margin-top: 1rem;
+}
 .search-section input {
-  width: 100%;
-  padding: 0.75rem;
+  width: 80%;
+  max-width: 400px;
+  padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  margin-bottom: 1.5rem;
 }
 
+/* Product Grid */
 .shops-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-.shop-card {
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 1rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-button {
-  margin-left: 10px;
-  padding: 0.4rem 0.7rem;
-  background-color: #006dac;
-  color: rgb(255, 255, 255);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #005f4a;
-}
-.payment-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid rgb(28, 28, 140);
-  border-radius: 10px;
-}
-
-
-
-.payment-form input {
-  padding: 8px;
-  font-size: 16px;
-}
-
-.payment-form button {
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-}
-
-#paymentStatus {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 18px;
-}
-.confirmation-container {
-  max-width: 600px;
-  margin: 5rem auto;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
   padding: 2rem;
-  background: #fff;
-  text-align: center;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  justify-content: center;
 }
 
-.confirmation-container h1 {
-  font-size: 2rem;
-  color: #2b8a3e;
-}
-
-.confirmation-container p {
-  font-size: 1.1rem;
-  margin: 1rem 0;
-}
-
-.confirmation-container button {
-  margin-top: 1.5rem;
-  background: #2b8a3e;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.profile-section {
-  max-width: 500px;
-  margin: auto;
-  padding: 1rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.profile-section h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.profile-field {
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.profile-field input {
-  width: 65%;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.profile-field button {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-}
-
-.profile-section button:last-child {
-  width: 100%;
-  margin-top: 1rem;
-  background-color: #2196F3;
-}
-.profile-button {
-  display: inline-block;
-  margin-right: 10px;
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  background-color: #4CAF50;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.profile-button:hover {
-  background-color: #388E3C;
-}
-    
-
-.home-button, .cart-button, .logout-button {
-  display: inline-block;
-  margin-left: 10px;
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.home-button {
-  background-color: #007bff; /* Blue */
-}
-
-.home-button:hover {
-  background-color: #0056b3;
-}
-
-.cart-button {
-  background-color: #ff9800; /* Orange */
-}
-
-.cart-button:hover {
-  background-color: #e68900;
-}
-
-.logout-button {
-  background-color: #f44336; /* Red */
-}
-
-.logout-button:hover {
-  background-color: #c62828;
-}
-
-
-
-
+/* Product Card */
 .shop-card {
-  background-color: white;
-  border: 1px solid #ddd;
+  background-color: rgba(255, 255, 255, 0.95);
   border-radius: 10px;
   padding: 1rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   max-height: 400px;
   overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: transform 0.2s ease;
 }
 
 .shop-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
 }
 
-
-
-
-
-
+.shop-card h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #2b2b2b;
+}
 
 .shop-card ul {
   list-style: none;
@@ -259,95 +93,131 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  font-size: 14px;
+  padding: 6px 0;
   border-bottom: 1px solid #eee;
-  font-size: 15px;
 }
 
-
-
-
-
-
-
-
-.action-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.action-buttons a,
-.action-buttons button {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: none;
-  background-color: #007b5f;
+.shop-card li button {
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: #007bff;
   color: white;
-  text-decoration: none;
-  font-weight: bold;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+}
+.shop-card li button:hover {
+  background-color: #0056b3;
 }
 
-.action-buttons a:hover,
-.action-buttons button:hover {
-  background-color: #005f4a;
+/* Banner Section */
+.banner-section {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+.flower-back {
+  width: 90%;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.welcome-heading {
+  margin-top: 1rem;
+  font-size: 24px;
+}
+.welcome-description {
+  color: #444;
+}
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  border: 2px solid #4452d6;
 }
 
+.payment-form input {
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
 
+.payment-form button {
+  padding: 12px;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
 
-@media screen and (max-width: 768px) {
+.welcome-banner {
+  max-width: 800px;
+  margin: 2rem auto;
+  text-align: center;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.welcome-banner img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+@media (max-width: 768px) {
   .shops-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    grid-template-columns: 1fr;
   }
-
-  .shop-card {
-    max-height: 300px;
-  }
-
   .top-bar {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .user-info {
+  .action-buttons {
     margin-top: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
   }
 }
-
-
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-image: url(images/flower\ back.jpeg); /* Example Unsplash image */
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  color: #333;
-}
-
-
-.flower\ back {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-  display: block;
-  margin: 20px auto;
-}
-
-.overlay {
-  background-color: rgba(255, 255, 255, 0.85);
+.cart-container {
+  background: rgba(255, 255, 255, 0.95);
+  max-width: 500px;
+  margin: 2rem auto;
   padding: 2rem;
-  border-radius: 10px;
-  max-width: 900px;
-  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
+.cart-container ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
 
+.cart-container li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 16px;
+}
+
+.cart-actions button {
+  padding: 10px 20px;
+  margin: 0.3rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.cart-actions button:hover {
+  background-color: #0056b3;
+}
