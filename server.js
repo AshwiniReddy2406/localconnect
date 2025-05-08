@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
 // ✅ Sync DB and seed default data
-db.sequelize.sync({ force: true }).then(async () => {
+db.sequelize.sync({ force: false }).then(async () => {
   console.log("✅ DB Synced");
 
   // Create default user

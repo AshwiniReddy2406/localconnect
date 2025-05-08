@@ -3,17 +3,17 @@ const router = express.Router();
 const { Order } = require('../models');
 const auth = require('../middleware/authMiddleware');
 
-router.get('/history', auth, async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
-    const orders = await Order.findAll({
-      where: { userId: req.userId },
-      order: [['createdAt', 'DESC']]
+    const order = await Order.findOne({
+      where: { id: req.params.id, userId: req.user.id }
     });
-    res.json(orders);
+
+    if (!order) return res.status(404).json({ message: "Order not found" });
+
+    res.json(order);
   } catch (err) {
-    console.error("❌ Fetch error:", err);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error(err);
+    res.status(500).json({ message: "Failed to retrieve order" });
   }
 });
-
-module.exports = router;
